@@ -4,9 +4,13 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.2",
+    "axios": "^0.18.0",
+    "ismobilejs": "^0.5.1",
     "netlify-cli": "^2.8.3",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-lazyload": "^2.5.0",
+    "react-modal": "^3.8.1",
     "react-scripts": "2.1.8"
   },
   "scripts": {
