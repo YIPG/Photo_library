@@ -10,46 +10,64 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import isMobile from "ismobilejs";
+import InfiniteScroll from "react-infinite-scroller";
 
 class App extends Component {
   state = {
-    offset: 0,
-    imageID: [],
-    imageURL: [],
+    loading: false,
     open: false,
     dialogOpen: false,
-    targetURL: "//:0"
+    targetURL: "//:0",
+    images: [],
+    hasMore: true
   };
 
-  componentDidMount() {}
+  componentWillUnmount() {
+    this.setState({
+      hasMore: false
+    });
+  }
 
   getImage = async () => {
+    if (this.state.loading) {
+      console.log(`読み込み中`);
+      return;
+    }
+    this.setState({
+      loading: true
+    });
     try {
       const response = await axios.get(
         "https://wfc-2019.firebaseapp.com/images",
         {
           params: {
             limit: 10,
-            offset: this.state.offset
+            offset: this.state.images.length
           }
         }
       );
-      this.setState({
-        offset: this.state.offset + 10
-      });
-      // console.log(response.data.data.images);
-      response.data.data.images.forEach(image => {
-        // console.log(image);
+      console.log(response.data.data.images.length);
+      if (response.data.data.images.length === 0) {
         this.setState({
-          imageURL: [...this.state.imageURL, image.url],
-          imageID: [...this.state.imageID, image.id]
+          hasMore: false
         });
+      }
+      this.setState({
+        images: [...this.state.images, ...response.data.data.images],
+        loading: false
       });
-      console.log(`state内: `, this.state.imageURL);
+      // response.data.data.images.forEach(image => {
+      //   // console.log(image);
+      //   this.setState({
+      //     imageURL: [...this.state.imageURL, image.url],
+      //     imageID: [...this.state.imageID, image.id]
+      //   });
+      // });
     } catch (err) {
       console.log(`画像URLを取得する過程でエラーが発生しました: ${err}`);
       this.setState({
-        dialogOpen: true
+        dialogOpen: true,
+        loading: false
       });
     }
   };
@@ -63,8 +81,8 @@ class App extends Component {
   };
 
   render() {
-    const imageItems = this.state.imageURL.map(image => (
-      <LazyLoad key={image.toString()} height={200}>
+    const imageItems = this.state.images.map(image => (
+      <LazyLoad key={image.id.toString()} height={200} offset={100} once>
         <img
           alt=""
           style={{
@@ -75,10 +93,10 @@ class App extends Component {
           onClick={() => {
             this.setState({
               open: true,
-              targetURL: image
+              targetURL: image.url
             });
           }}
-          src={image}
+          src={image.url}
         />
       </LazyLoad>
     ));
@@ -87,7 +105,12 @@ class App extends Component {
       <div className="App" style={{ margin: "0 auto" }}>
         こんにちは
         <button onClick={() => this.getImage()}>画像URL取得</button>
-        <div>{imageItems}</div>
+        <InfiniteScroll
+          loadMore={() => this.getImage()}
+          hasMore={this.state.hasMore}
+        >
+          {imageItems}
+        </InfiniteScroll>
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"

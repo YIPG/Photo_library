@@ -9,6 +9,7 @@
     "netlify-cli": "^2.8.3",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-infinite-scroller": "^1.2.4",
     "react-lazyload": "^2.5.0",
     "react-modal": "^3.8.1",
     "react-scripts": "2.1.8"
