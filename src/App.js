@@ -82,7 +82,13 @@ class App extends Component {
 
   render() {
     const imageItems = this.state.images.map(image => (
-      <LazyLoad key={image.id.toString()} height={200} offset={100} once>
+      <LazyLoad
+        // placeholder={"あああ"}
+        key={image.id.toString()}
+        height={200}
+        offset={400}
+        once
+      >
         <img
           alt=""
           style={{
@@ -104,6 +110,7 @@ class App extends Component {
     return (
       <div className="App" style={{ margin: "0 auto" }}>
         <InfiniteScroll
+          initialLoad
           loadMore={() => this.getImage()}
           hasMore={this.state.hasMore}
         >
