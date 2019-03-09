@@ -124,7 +124,9 @@ class App extends Component {
         >
           <div
             style={{
-              margin: "50px 10% 0 10%"
+              margin: `${
+                isMobile.any ? "200px 10% 50px 10%" : "50px 10% 50px 10%"
+              }`
             }}
           >
             {this.state.targetURL !== "//:0" && (
