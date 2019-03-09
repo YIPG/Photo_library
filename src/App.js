@@ -103,8 +103,6 @@ class App extends Component {
 
     return (
       <div className="App" style={{ margin: "0 auto" }}>
-        こんにちは
-        <button onClick={() => this.getImage()}>画像URL取得</button>
         <InfiniteScroll
           loadMore={() => this.getImage()}
           hasMore={this.state.hasMore}
