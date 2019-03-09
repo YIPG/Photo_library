@@ -124,7 +124,7 @@ class App extends Component {
         >
           <div
             style={{
-              margin: "10%"
+              margin: "50px 10% 0 10%"
             }}
           >
             {this.state.targetURL !== "//:0" && (
