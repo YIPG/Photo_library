@@ -22,6 +22,91 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import isMobile from "ismobilejs";
 import InfiniteScroll from "react-infinite-scroller";
 
+// 一覧画面で矢印移動を実現しようとしたが、時間的に間に合わず断念。
+//
+// class ImageItem extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.imgFocus = React.createRef();
+//   }
+//   componentDidMount() {
+//     if (this.props.focusIndex === this.props.index) {
+//       this.imgFocus.current.focus();
+//     }
+//   }
+
+//   render() {
+//     const { image, showDetail } = this.props;
+//     return (
+//       <img
+//         ref={this.imgFocus}
+//         tabIndex={0}
+//         // onFocus={() =>
+//         //   this.setState({
+//         //     focusIndex: index
+//         //   })
+//         // }
+//         alt={image.title}
+//         style={{
+//           objectFit: "cover",
+//           width: `${isMobile.any ? "31%" : "18%"}`,
+//           height: `${isMobile.any ? "100px" : "150px"}`,
+//           margin: "0 1% 6px 1%"
+//         }}
+//         onClick={() => {
+//           showDetail();
+//         }}
+//         onKeyPress={target => {
+//           if (target.charCode == 13) {
+//             showDetail();
+//           }
+//         }}
+//         // onKeyDown={target => {
+//         //   console.log(target.keyCode, target.ctrlKey);
+//         //   if (isMobile.any) return;
+//         //   if (
+//         //     target.keyCode === 39 ||
+//         //     (target.ctrlKey && target.keyCode === 70)
+//         //   ) {
+//         //     tabIndex + 1 < images.length &&
+//         //       this.setState({
+//         //         tabIndex: this.state.tabIndex + 1
+//         //       });
+//         //   }
+//         //   if (
+//         //     target.keyCode === 37 ||
+//         //     (target.ctrlKey && target.keyCode === 66)
+//         //   ) {
+//         //     tabIndex > 0 &&
+//         //       this.setState({
+//         //         tabIndex: this.state.tabIndex - 1
+//         //       });
+//         //   }
+//         //   if (
+//         //     target.keyCode === 40 ||
+//         //     (target.ctrlKey && target.keyCode === 78)
+//         //   ) {
+//         //     tabIndex + 5 < images.length &&
+//         //       this.setState({
+//         //         tabIndex: this.state.tabIndex + 5
+//         //       });
+//         //   }
+//         //   if (
+//         //     target.keyCode === 38 ||
+//         //     (target.ctrlKey && target.keyCode === 80)
+//         //   ) {
+//         //     tabIndex > 4 &&
+//         //       this.setState({
+//         //         tabIndex: this.state.tabIndex - 5
+//         //       });
+//         //   }
+//         // }}
+//         src={image.url}
+//       />
+//     );
+//   }
+// }
+
 class App extends Component {
   state = {
     loading: false,
@@ -70,13 +155,6 @@ class App extends Component {
         images: [...this.state.images, ...response.data.data.images],
         loading: false
       });
-      // response.data.data.images.forEach(image => {
-      //   // console.log(image);
-      //   this.setState({
-      //     imageURL: [...this.state.imageURL, image.url],
-      //     imageID: [...this.state.imageID, image.id]
-      //   });
-      // });
     } catch (err) {
       console.log(`画像URLを取得する過程でエラーが発生しました: ${err}`);
       this.setState({
@@ -100,20 +178,9 @@ class App extends Component {
 
   render() {
     const imageItems = this.state.images.map((image, index) => (
-      <LazyLoad
-        // placeholder={"あああ"}
-        key={image.id.toString()}
-        height={200}
-        offset={400}
-        once
-      >
+      <LazyLoad key={image.id.toString()} height={200} offset={400} once>
         <img
           tabIndex={0}
-          // onFocus={() =>
-          //   this.setState({
-          //     focusIndex: index
-          //   })
-          // }
           alt={image.title}
           style={{
             objectFit: "cover",
