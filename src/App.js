@@ -12,6 +12,13 @@ import Snackbar from "@material-ui/core/Snackbar";
 import BrightnessTwoOutlined from "@material-ui/icons/Brightness2Outlined";
 import WbSunny from "@material-ui/icons/WbSunny";
 import CloseIcon from "@material-ui/icons/Close";
+import Help from "@material-ui/icons/Help";
+import HelpOutlined from "@material-ui/icons/HelpOutlined";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import isMobile from "ismobilejs";
 import InfiniteScroll from "react-infinite-scroller";
 
@@ -25,7 +32,8 @@ class App extends Component {
     hasMore: true,
     badConnection: false,
     nightMode: false,
-    focusIndex: 0
+    focusIndex: 0,
+    helpOpen: false
   };
 
   componentWillUnmount() {
@@ -84,6 +92,10 @@ class App extends Component {
 
   handleDialogClose = () => {
     this.setState({ dialogOpen: false, badConnection: true });
+  };
+
+  handleHelpClose = () => {
+    this.setState({ helpOpen: false });
   };
 
   render() {
@@ -201,16 +213,25 @@ class App extends Component {
               }
               variant="h6"
               color="primary"
+              aria-label="すごい写真集"
             >
-              Photos
+              すごい写真集
             </Typography>
             <IconButton
               style={nightMode ? { color: "#8899a6" } : { color: "#2d8c3c" }}
               onClick={() => this.setState({ nightMode: !nightMode })}
               color="primary"
-              aria-label="Change to Night Mode"
+              aria-label="ダークモード切り替え"
             >
               {nightMode ? <WbSunny /> : <BrightnessTwoOutlined />}
+            </IconButton>
+            <IconButton
+              style={nightMode ? { color: "#8899a6" } : { color: "#2d8c3c" }}
+              onClick={() => this.setState({ helpOpen: true })}
+              color="primary"
+              aria-label="ダークモード切り替え"
+            >
+              {nightMode ? <Help /> : <HelpOutlined />}
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -311,6 +332,7 @@ class App extends Component {
           }
           action={[
             <Button
+              aria-label="ok"
               key="ok"
               color="secondary"
               size="small"
@@ -331,6 +353,52 @@ class App extends Component {
             </IconButton>
           ]}
         />
+        <Dialog
+          open={this.state.helpOpen}
+          onClose={this.handleHelpClose}
+          aria-labelledby="help"
+          aria-describedby="help-wanted"
+        >
+          <DialogTitle id="help-title">{"なにかお困りですか？"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="help-content">
+              一覧、詳細画像ではそれぞれ次のショートカットが有効です。お試しください。
+            </DialogContentText>
+            <div style={{ textAlign: "left", marginTop: 20 }}>
+              <DialogContentText id="help-content">tab = 次</DialogContentText>
+              <DialogContentText id="help-content">
+                enter = 詳細表示
+              </DialogContentText>
+            </div>
+            <div style={{ textAlign: "left", marginTop: 20 }}>
+              <DialogContentText id="help-content">
+                ctrl + f, → = 次
+              </DialogContentText>
+              <DialogContentText id="help-content">
+                ctrl + b, ← = 前
+              </DialogContentText>
+              <DialogContentText id="help-content">
+                ctrl + n, ↓ = 次の段
+              </DialogContentText>
+              <DialogContentText id="help-content">
+                ctrl + p, ↑ = 前の段
+              </DialogContentText>
+              <DialogContentText id="help-content">
+                esc = 一覧
+              </DialogContentText>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={this.handleHelpClose}
+              color="primary"
+              style={{ color: "#2d8c3c" }}
+              autoFocus
+            >
+              OK
+            </Button>
+          </DialogActions>
+        </Dialog>
         {/* <Dialog
           open={dialogOpen}
           onClose={this.handleDialogClose}
