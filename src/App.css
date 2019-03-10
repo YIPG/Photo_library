@@ -2,7 +2,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center
+  align-items: center;
+  flex-grow: 1;
+}
+
+.menu {
+  margin-left: -12;
+  margin-right: 20;
 }
 
 .App-logo {
