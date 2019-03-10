@@ -229,7 +229,7 @@ class App extends Component {
               style={nightMode ? { color: "#8899a6" } : { color: "#2d8c3c" }}
               onClick={() => this.setState({ helpOpen: true })}
               color="primary"
-              aria-label="ダークモード切り替え"
+              aria-label="ヘルプボタン"
             >
               {nightMode ? <Help /> : <HelpOutlined />}
             </IconButton>
