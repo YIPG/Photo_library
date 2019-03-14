@@ -3,8 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/core": "^10.0.9",
+    "@emotion/styled": "^10.0.9",
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
+    "@types/ismobilejs": "^0.4.1",
+    "@types/jest": "^24.0.11",
+    "@types/node": "^11.11.1",
+    "@types/react": "^16.8.7",
+    "@types/react-dom": "^16.8.2",
+    "@types/react-infinite-scroller": "^1.2.1",
+    "@types/react-lazyload": "^2.3.2",
+    "@types/react-router-dom": "^4.3.1",
     "axios": "^0.18.0",
     "ismobilejs": "^0.5.1",
     "netlify-cli": "^2.8.3",
@@ -13,7 +23,9 @@
     "react-infinite-scroller": "^1.2.4",
     "react-lazyload": "^2.5.0",
     "react-modal": "^3.8.1",
-    "react-scripts": "2.1.8"
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.8",
+    "typescript": "^3.3.3333"
   },
   "scripts": {
     "start": "react-scripts start",
