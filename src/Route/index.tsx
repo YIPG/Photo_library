@@ -2,7 +2,7 @@ import { default as React, lazy, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Switch,1
+  Switch,
   RouteProps
 } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
